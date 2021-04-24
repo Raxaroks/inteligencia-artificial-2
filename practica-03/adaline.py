@@ -2,7 +2,6 @@ import math
 import numpy as np
 
 class Adaline:
-
     def __init__(self, inputs, wished_result):
         self.x = inputs
         self.d = wished_result
@@ -10,18 +9,15 @@ class Adaline:
         self.y = 0
         self.e = 0
 
-
     def computeResult(self):
-        a = np.array( [self.x[1], self.x[2]] )
-        b = np.array( [self.w[1], self.w[2]] )
-        dot = np.dot( a, b )
-        return dot
-
-
-    def activationFunc(self, v):
-        result = 1 / (1 + math.exp(-v))
+        x = np.array(self.x)
+        w = np.array(self.w)
+        result = np.dot( x, w )
         return result
 
+    def activationFunc(self):
+        res = 1 / (1 + np.exp( - self.computeResult() ))
+        return res
 
     def computeError(self):
         error = self.d - self.y

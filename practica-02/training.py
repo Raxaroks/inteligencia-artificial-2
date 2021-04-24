@@ -48,22 +48,29 @@ class Training:
                 neuronas.append( neurona )
 
             # mostramos los resultados de la neurona en consola
-            print("--------------------- ÉPOCA {epoca} -----------------------------------------------------------".format(epoca = self.epocas))
-            print("X0\t", "X1  \t", "X2  \t", "d  \t", "y  \t", "e  \t", "W0  \t", "W1  \t", "W2  \t")
-
-            for n in neuronas:
-                print(n.x[0], "\t", n.x[1], "\t", n.x[2], "\t", n.d, "\t", n.y, "\t", n.e, "\t", n.w[0], "\t", n.w[1], "\t", n.w[2], "\t")
-            print("-----------------------------------------------------------------------------------------\n")
-
-            # mostramos la línea separadora graficando en cada época
-            self.plotLine( neuronas )
+            if self.epocas % 10 == 0:
+                print("--------------------- ÉPOCA {epoca} -----------------------------------------------------------".format(epoca = self.epocas))
+                print("X0\t", "X1  \t", "X2  \t", "d  \t", "y  \t", "e  \t", "W0  \t", "W1  \t", "W2  \t")
+                for n in neuronas:
+                    print(n.x[0], "\t", n.x[1], "\t", n.x[2], "\t", n.d, "\t", n.y, "\t", n.e, "\t", n.w[0], "\t", n.w[1], "\t", n.w[2], "\t")
+                print("-----------------------------------------------------------------------------------------\n")
+                # mostramos la línea separadora graficando en cada época
+                self.plotLine(neuronas)
+            
             self.epocas = self.epocas + 1 # actualizamos el número de épocas
 
             # verificamos si hay errores
             execute = self.checkForErrors(neuronas)
             if execute == False:
+                self.plotLine(neuronas)
+                print("--------------------- ÉPOCA {epoca} -----------------------------------------------------------".format(epoca=self.epocas))
+                print("X0\t", "X1  \t", "X2  \t", "d  \t", "y  \t", "e  \t", "W0  \t", "W1  \t", "W2  \t")
+                print("\n LÍMITE DE ÉPOCAS ALCANZADO!!!")
                 print("\n ENTRENAMIENTO FINALIZADO!!!")
             if self.epocas > LIMITE_EPOCAS:
+                self.plotLine(neuronas)
+                print("--------------------- ÉPOCA {epoca} -----------------------------------------------------------".format(epoca=self.epocas))
+                print("X0\t", "X1  \t", "X2  \t", "d  \t", "y  \t", "e  \t", "W0  \t", "W1  \t", "W2  \t")
                 print("\n LÍMITE DE ÉPOCAS ALCANZADO!!!")
                 break
 
@@ -112,7 +119,7 @@ class Training:
 
         plt.scatter( [elemento[0] for elemento in inactives], [elemento[1] for elemento in inactives], color='red', ) # puntos inactivos
         plt.scatter( [elemento[0] for elemento in actives], [elemento[1] for elemento in actives], color='green', ) # puntos activos
-        plt.plot( x_array, y_array, 'g' ) # línea separadora
+        plt.plot( x_array, y_array, color="blue" ) # línea separadora
         plt.show(block=False)
         plt.pause(0.5)
 
